@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: x
+      POSTGRES_PASSWORD: x
+      POSTGRES_DB: x
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    network_mode: "host"
+
+  crud-service:
+    build:
+      context: CRUD-Service
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    network_mode: "host"
+
+volumes:
+  postgres_data:
