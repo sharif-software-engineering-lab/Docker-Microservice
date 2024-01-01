@@ -18,9 +18,20 @@ services:
       context: CRUD-Service
       dockerfile: Dockerfile
     ports:
-      - 8080-8085:8080
+      - 8080-8081:8080
     depends_on:
       - postgres
+    networks:
+      - app-network
+  
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 9000:9000
+    depends_on:
+      - crud-service
     networks:
       - app-network
 
